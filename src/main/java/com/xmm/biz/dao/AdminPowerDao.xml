@@ -262,7 +262,8 @@
     select
     <include refid="Base_Column_List" />
     from admin_power
-    where id in (
+    where state = 1
+    and id in (
     select powerId from admin_role_power where roleId = (
     select roleId from admin_user_role where userId = #{userId}))
   </select>

@@ -277,6 +277,17 @@
     SELECT COUNT(1) AS hav FROM admin_user_role ur
     INNER JOIN admin_role_power rp ON ur.roleId = rp.roleId
     INNER JOIN admin_power po ON rp.powerId = po.id
-    WHERE ur.userId = #{userId} AND po.powerEnum = #{powerEnum};
+    INNER JOIN admin_menu me ON me.id = po.menuId
+    INNER JOIN admin_catalog ca ON ca.id = me.catalogId
+    INNER JOIN admin_user us ON us.id = ur.userId
+    INNER JOIN admin_role ro ON ro.id = ur.roleId
+    INNER JOIN admin_group gp ON gp.id = us.groupId
+    WHERE us.state = 1
+    AND po.state = 1
+    AND me.state = 1
+    AND ca.state = 1
+    AND ro.state = 1
+    AND gp.state = 1
+    AND ur.userId = #{userId} AND po.powerEnum = #{powerEnum};
   </select>
 </mapper>

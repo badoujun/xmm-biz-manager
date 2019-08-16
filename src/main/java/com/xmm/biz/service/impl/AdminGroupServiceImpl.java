@@ -138,13 +138,19 @@ public class AdminGroupServiceImpl implements AdminGroupService {
         AdminUser user = adminUserDao.selectByPrimaryKey(userId);
         long myGroupId = user.getGroupid();
         long childId = groupId;
-        while(true){//向上追溯组织
-            AdminGroup group = adminGroupDao.selectByPrimaryKey(childId);
-            if(group.getParentid().equals(myGroupId)){
-                flag = true;
-                break;
-            }else if(group.getParentid().equals(0)){
-                break;
+        if(user.getGroupid().equals(groupId)){
+            flag = true;
+        }else{//向上追溯组织
+            while(true){
+                AdminGroup group = adminGroupDao.selectByPrimaryKey(childId);
+                if(group.getParentid().equals(myGroupId)){
+                    flag = true;
+                    break;
+                }else if(group.getParentid().equals(Integer.valueOf(0).longValue())){
+                    break;
+                }else{
+                    childId = group.getParentid();
+                }
             }
         }
         return flag;

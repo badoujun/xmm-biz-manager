@@ -70,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
             AdminMenuExample.Criteria menuExampleCriteria = menuExample.createCriteria();
             menuExample.setOrderByClause("sort");
             menuExampleCriteria.andIdIn(new ArrayList<>(menuIds));
+            menuExampleCriteria.andStateEqualTo(Integer.valueOf(1).byteValue());
             List<AdminMenu> menuList = adminMenuDao.selectByExample(menuExample);
             Set<Long> catalogIds = new HashSet<>();
             for(AdminMenu adminMenu : menuList){
@@ -79,6 +80,7 @@ public class AdminServiceImpl implements AdminService {
             AdminCatalogExample.Criteria catalogExampleCriteria= catalogExample.createCriteria();
             catalogExample.setOrderByClause("sort");
             catalogExampleCriteria.andIdIn(new ArrayList<>(catalogIds));
+            catalogExampleCriteria.andStateEqualTo(Integer.valueOf(1).byteValue());
             List<AdminCatalog> catalogList = adminCatalogDao.selectByExample(catalogExample);
             List<CatalogVo> catalogVoList = new ArrayList<>();
             for(AdminCatalog adminCatalog : catalogList){
