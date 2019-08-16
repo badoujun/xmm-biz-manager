@@ -5,8 +5,8 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="groupId" jdbcType="BIGINT" property="groupid" />
     <result column="roleName" jdbcType="VARCHAR" property="rolename" />
-    <result column="sort" jdbcType="BIT" property="sort" />
-    <result column="state" jdbcType="BIT" property="state" />
+    <result column="sort" jdbcType="TINYINT" property="sort" />
+    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="updator" jdbcType="VARCHAR" property="updator" />
@@ -114,8 +114,8 @@
     insert into admin_role (groupId, roleName, sort, 
       `state`, createTime, updateTime, 
       updator)
-    values (#{groupid,jdbcType=BIGINT}, #{rolename,jdbcType=VARCHAR}, #{sort,jdbcType=BIT}, 
-      #{state,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+    values (#{groupid,jdbcType=BIGINT}, #{rolename,jdbcType=VARCHAR}, #{sort,jdbcType=TINYINT}, 
+      #{state,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
       #{updator,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xmm.biz.pojo.AdminRole" useGeneratedKeys="true">
@@ -151,10 +151,10 @@
         #{rolename,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
-        #{sort,jdbcType=BIT},
+        #{sort,jdbcType=TINYINT},
       </if>
       <if test="state != null">
-        #{state,jdbcType=BIT},
+        #{state,jdbcType=TINYINT},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -186,10 +186,10 @@
         roleName = #{record.rolename,jdbcType=VARCHAR},
       </if>
       <if test="record.sort != null">
-        sort = #{record.sort,jdbcType=BIT},
+        sort = #{record.sort,jdbcType=TINYINT},
       </if>
       <if test="record.state != null">
-        `state` = #{record.state,jdbcType=BIT},
+        `state` = #{record.state,jdbcType=TINYINT},
       </if>
       <if test="record.createtime != null">
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -210,8 +210,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       groupId = #{record.groupid,jdbcType=BIGINT},
       roleName = #{record.rolename,jdbcType=VARCHAR},
-      sort = #{record.sort,jdbcType=BIT},
-      `state` = #{record.state,jdbcType=BIT},
+      sort = #{record.sort,jdbcType=TINYINT},
+      `state` = #{record.state,jdbcType=TINYINT},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
       updator = #{record.updator,jdbcType=VARCHAR}
@@ -229,10 +229,10 @@
         roleName = #{rolename,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
-        sort = #{sort,jdbcType=BIT},
+        sort = #{sort,jdbcType=TINYINT},
       </if>
       <if test="state != null">
-        `state` = #{state,jdbcType=BIT},
+        `state` = #{state,jdbcType=TINYINT},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -250,8 +250,8 @@
     update admin_role
     set groupId = #{groupid,jdbcType=BIGINT},
       roleName = #{rolename,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=BIT},
-      `state` = #{state,jdbcType=BIT},
+      sort = #{sort,jdbcType=TINYINT},
+      `state` = #{state,jdbcType=TINYINT},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP},
       updator = #{updator,jdbcType=VARCHAR}

@@ -455,52 +455,52 @@ public class AdminMenuExample {
             return (Criteria) this;
         }
 
-        public Criteria andStateEqualTo(Boolean value) {
+        public Criteria andStateEqualTo(Byte value) {
             addCriterion("`state` =", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotEqualTo(Boolean value) {
+        public Criteria andStateNotEqualTo(Byte value) {
             addCriterion("`state` <>", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThan(Boolean value) {
+        public Criteria andStateGreaterThan(Byte value) {
             addCriterion("`state` >", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStateGreaterThanOrEqualTo(Byte value) {
             addCriterion("`state` >=", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThan(Boolean value) {
+        public Criteria andStateLessThan(Byte value) {
             addCriterion("`state` <", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThanOrEqualTo(Boolean value) {
+        public Criteria andStateLessThanOrEqualTo(Byte value) {
             addCriterion("`state` <=", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateIn(List<Boolean> values) {
+        public Criteria andStateIn(List<Byte> values) {
             addCriterion("`state` in", values, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotIn(List<Boolean> values) {
+        public Criteria andStateNotIn(List<Byte> values) {
             addCriterion("`state` not in", values, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateBetween(Boolean value1, Boolean value2) {
+        public Criteria andStateBetween(Byte value1, Byte value2) {
             addCriterion("`state` between", value1, value2, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStateNotBetween(Byte value1, Byte value2) {
             addCriterion("`state` not between", value1, value2, "state");
             return (Criteria) this;
         }

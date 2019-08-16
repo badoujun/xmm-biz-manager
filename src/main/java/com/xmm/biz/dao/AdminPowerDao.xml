@@ -6,7 +6,7 @@
     <result column="menuId" jdbcType="BIGINT" property="menuid" />
     <result column="powerName" jdbcType="VARCHAR" property="powername" />
     <result column="powerEnum" jdbcType="VARCHAR" property="powerenum" />
-    <result column="state" jdbcType="BIT" property="state" />
+    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="updator" jdbcType="VARCHAR" property="updator" />
@@ -115,7 +115,7 @@
       `state`, createTime, updateTime, 
       updator)
     values (#{menuid,jdbcType=BIGINT}, #{powername,jdbcType=VARCHAR}, #{powerenum,jdbcType=VARCHAR}, 
-      #{state,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
       #{updator,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xmm.biz.pojo.AdminPower" useGeneratedKeys="true">
@@ -154,7 +154,7 @@
         #{powerenum,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
-        #{state,jdbcType=BIT},
+        #{state,jdbcType=TINYINT},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -189,7 +189,7 @@
         powerEnum = #{record.powerenum,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null">
-        `state` = #{record.state,jdbcType=BIT},
+        `state` = #{record.state,jdbcType=TINYINT},
       </if>
       <if test="record.createtime != null">
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -211,7 +211,7 @@
       menuId = #{record.menuid,jdbcType=BIGINT},
       powerName = #{record.powername,jdbcType=VARCHAR},
       powerEnum = #{record.powerenum,jdbcType=VARCHAR},
-      `state` = #{record.state,jdbcType=BIT},
+      `state` = #{record.state,jdbcType=TINYINT},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
       updator = #{record.updator,jdbcType=VARCHAR}
@@ -232,7 +232,7 @@
         powerEnum = #{powerenum,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
-        `state` = #{state,jdbcType=BIT},
+        `state` = #{state,jdbcType=TINYINT},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -251,7 +251,7 @@
     set menuId = #{menuid,jdbcType=BIGINT},
       powerName = #{powername,jdbcType=VARCHAR},
       powerEnum = #{powerenum,jdbcType=VARCHAR},
-      `state` = #{state,jdbcType=BIT},
+      `state` = #{state,jdbcType=TINYINT},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP},
       updator = #{updator,jdbcType=VARCHAR}

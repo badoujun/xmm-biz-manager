@@ -33,7 +33,7 @@ public class AdminMenu implements Serializable {
     /**
      * 状态,1-正常,2-禁用
      */
-    private Boolean state;
+    private Byte state;
 
     /**
      * 创建时间
@@ -92,11 +92,11 @@ public class AdminMenu implements Serializable {
         this.sort = sort;
     }
 
-    public Boolean getState() {
+    public Byte getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(Byte state) {
         this.state = state;
     }
 

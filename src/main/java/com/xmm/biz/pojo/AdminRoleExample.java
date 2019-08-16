@@ -325,52 +325,52 @@ public class AdminRoleExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortEqualTo(Boolean value) {
+        public Criteria andSortEqualTo(Byte value) {
             addCriterion("sort =", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortNotEqualTo(Boolean value) {
+        public Criteria andSortNotEqualTo(Byte value) {
             addCriterion("sort <>", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortGreaterThan(Boolean value) {
+        public Criteria andSortGreaterThan(Byte value) {
             addCriterion("sort >", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSortGreaterThanOrEqualTo(Byte value) {
             addCriterion("sort >=", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortLessThan(Boolean value) {
+        public Criteria andSortLessThan(Byte value) {
             addCriterion("sort <", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortLessThanOrEqualTo(Boolean value) {
+        public Criteria andSortLessThanOrEqualTo(Byte value) {
             addCriterion("sort <=", value, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortIn(List<Boolean> values) {
+        public Criteria andSortIn(List<Byte> values) {
             addCriterion("sort in", values, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortNotIn(List<Boolean> values) {
+        public Criteria andSortNotIn(List<Byte> values) {
             addCriterion("sort not in", values, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortBetween(Boolean value1, Boolean value2) {
+        public Criteria andSortBetween(Byte value1, Byte value2) {
             addCriterion("sort between", value1, value2, "sort");
             return (Criteria) this;
         }
 
-        public Criteria andSortNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSortNotBetween(Byte value1, Byte value2) {
             addCriterion("sort not between", value1, value2, "sort");
             return (Criteria) this;
         }
@@ -385,52 +385,52 @@ public class AdminRoleExample {
             return (Criteria) this;
         }
 
-        public Criteria andStateEqualTo(Boolean value) {
+        public Criteria andStateEqualTo(Byte value) {
             addCriterion("`state` =", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotEqualTo(Boolean value) {
+        public Criteria andStateNotEqualTo(Byte value) {
             addCriterion("`state` <>", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThan(Boolean value) {
+        public Criteria andStateGreaterThan(Byte value) {
             addCriterion("`state` >", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStateGreaterThanOrEqualTo(Byte value) {
             addCriterion("`state` >=", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThan(Boolean value) {
+        public Criteria andStateLessThan(Byte value) {
             addCriterion("`state` <", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThanOrEqualTo(Boolean value) {
+        public Criteria andStateLessThanOrEqualTo(Byte value) {
             addCriterion("`state` <=", value, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateIn(List<Boolean> values) {
+        public Criteria andStateIn(List<Byte> values) {
             addCriterion("`state` in", values, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotIn(List<Boolean> values) {
+        public Criteria andStateNotIn(List<Byte> values) {
             addCriterion("`state` not in", values, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateBetween(Boolean value1, Boolean value2) {
+        public Criteria andStateBetween(Byte value1, Byte value2) {
             addCriterion("`state` between", value1, value2, "state");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStateNotBetween(Byte value1, Byte value2) {
             addCriterion("`state` not between", value1, value2, "state");
             return (Criteria) this;
         }

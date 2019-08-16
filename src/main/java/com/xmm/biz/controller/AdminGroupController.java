@@ -42,7 +42,7 @@ public class AdminGroupController {
     @RequestMapping(name = "新增组织", value = "/add")
     @ResponseBody
     @ApiOperation("新增组织")
-    @UserLoginToken
+    @UserLoginToken(powerName = "group_add")
     public BaseResult<GroupResult> addGroup(AdminGroupAddRequest req){
         req.toRequestCheck();
         AdminGroup group = new AdminGroup();
@@ -63,7 +63,7 @@ public class AdminGroupController {
     @RequestMapping(name = "删除组织", value = "/delete")
     @ResponseBody
     @ApiOperation("删除组织")
-    @UserLoginToken
+    @UserLoginToken(powerName = "group_del")
     public BaseResult<String> deleteGroup(AdminIdRequest req){
         req.toRequestCheck();
         boolean flag = adminGroupService.delete(req.getId());
@@ -78,7 +78,7 @@ public class AdminGroupController {
     @RequestMapping(name = "修改组织", value = "/update")
     @ResponseBody
     @ApiOperation("修改组织")
-    @UserLoginToken
+    @UserLoginToken(powerName = "group_up")
     public BaseResult<String> updateGroup(AdminGroupUpRequest req){
         req.toRequestCheck();
         AdminGroup group = new AdminGroup();

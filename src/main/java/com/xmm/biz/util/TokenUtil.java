@@ -92,12 +92,11 @@ public class TokenUtil {
             String userId = jwt.getAudience().get(0);
             // 查询用户是否存在,以及验证用户状态
             AdminUser user = adminUserService.findById(Long.valueOf(userId));
-            if (user == null) {
+            if (user == null || user.getState() != 1) {
                 return false;
             }
             return true;
         } catch (Exception e) {
-//            e.printStackTrace();
             return false;
         }
     }

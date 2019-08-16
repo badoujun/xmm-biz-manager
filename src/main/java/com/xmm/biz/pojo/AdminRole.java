@@ -23,12 +23,12 @@ public class AdminRole implements Serializable {
     /**
      * 排序
      */
-    private Boolean sort;
+    private Byte sort;
 
     /**
      * 状态,1-正常,2-禁用
      */
-    private Boolean state;
+    private Byte state;
 
     /**
      * 创建时间
@@ -71,19 +71,19 @@ public class AdminRole implements Serializable {
         this.rolename = rolename;
     }
 
-    public Boolean getSort() {
+    public Byte getSort() {
         return sort;
     }
 
-    public void setSort(Boolean sort) {
+    public void setSort(Byte sort) {
         this.sort = sort;
     }
 
-    public Boolean getState() {
+    public Byte getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(Byte state) {
         this.state = state;
     }
 
