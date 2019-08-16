@@ -271,12 +271,4 @@
     WHERE groupId IN <foreach item="groups" index="index" collection="list" open="(" separator="," close=")"> #{groups}</foreach>
   </select>
 
-  <select id="findGroupByAdjacent">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM admin_group
-    WHERE parentId = 1
-    AND sort &lt; 5
-    ORDER BY sort DESC LIMIT 1;
-  </select>
 </mapper>

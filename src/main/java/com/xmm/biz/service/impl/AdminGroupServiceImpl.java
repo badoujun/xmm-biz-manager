@@ -8,6 +8,7 @@ import com.xmm.biz.dao.AdminUserDao;
 import com.xmm.biz.pojo.AdminGroup;
 import com.xmm.biz.pojo.AdminGroupExample;
 import com.xmm.biz.pojo.AdminRoleExample;
+import com.xmm.biz.pojo.AdminUser;
 import com.xmm.biz.service.AdminGroupService;
 import com.xmm.biz.vo.result.GroupResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,37 +110,43 @@ public class AdminGroupServiceImpl implements AdminGroupService {
         AdminGroup oldGroup = adminGroupDao.selectByPrimaryKey(group.getId());
         int offset = group.getSort() - oldGroup.getSort();
         if(offset != 0){
-            AdminGroup groupAdjacent = findGroupByAdjacent(oldGroup,offset < 0);
-            if(groupAdjacent != null){
-                AdminGroup record1 = new AdminGroup();
-                record1.setId(oldGroup.getId());
-                record1.setSort(groupAdjacent.getSort());
-                int row1 = adminGroupDao.updateByPrimaryKeySelective(record1);
-                AdminGroup record2 = new AdminGroup();
-                record2.setId(groupAdjacent.getId());
-                record2.setSort(oldGroup.getSort());
-                int row2 = adminGroupDao.updateByPrimaryKeySelective(record2);
-                flag = row1 == row2 && row1 > 0;
-            }
+            flag = displaceGroupSort(oldGroup, group.getSort());
         }else{
             flag = adminGroupDao.updateByPrimaryKeySelective(group) == 1;
         }
         return flag;
     }
 
-    private AdminGroup findGroupByAdjacent(AdminGroup group,boolean top){
+    private boolean displaceGroupSort(AdminGroup group, Byte sort){
         AdminGroupExample example = new AdminGroupExample();
-        example.setLimit(1);
         AdminGroupExample.Criteria criteria = example.createCriteria();
         criteria.andParentidEqualTo(group.getParentid());
-        if(top){
-            example.setOrderByClause("sort desc");
-            criteria.andSortLessThan(group.getSort());
-        }else{
-            example.setOrderByClause("sort asc");
-            criteria.andSortGreaterThan(group.getSort());
+        criteria.andSortEqualTo(sort);
+        AdminGroup record1 = new AdminGroup();
+        record1.setSort(group.getSort());
+        int row1 = adminGroupDao.updateByExampleSelective(record1, example);
+        AdminGroup record2 = new AdminGroup();
+        record2.setId(group.getId());
+        record2.setSort(sort);
+        int row2 = adminGroupDao.updateByPrimaryKeySelective(record2);
+        return row1 == row2 && row1 > 0;
+    }
+
+    @Override
+    public boolean isGroupInner(long userId, long groupId) {
+        boolean flag = false;
+        AdminUser user = adminUserDao.selectByPrimaryKey(userId);
+        long myGroupId = user.getGroupid();
+        long childId = groupId;
+        while(true){//向上追溯组织
+            AdminGroup group = adminGroupDao.selectByPrimaryKey(childId);
+            if(group.getParentid().equals(myGroupId)){
+                flag = true;
+                break;
+            }else if(group.getParentid().equals(0)){
+                break;
+            }
         }
-        List<AdminGroup> list = adminGroupDao.selectByExample(example);
-        return list.size() > 0 ? list.get(0) : null;
+        return flag;
     }
 }

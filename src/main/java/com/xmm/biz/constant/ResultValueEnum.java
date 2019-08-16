@@ -65,8 +65,8 @@ public enum ResultValueEnum implements BaseEnum<Integer>{
 	SYS_TOKEN_ANOMALY(25,"token解析异常"),
 	/**26:接口已停止使用*/
 	SYS_API_IS_STOP(26,"接口已停止使用"),
-	/**27:接口已停止使用*/
-	SYS_USER_NOT_HAVE_POWER(27,"用户无相关接口操作权限"),
+	/**27:用户无操作权限*/
+	SYS_USER_NOT_HAVE_POWER(27,"用户无操作权限"),
 
 	//30~99其他错误////////////////////////////////////////////////////////
 	/**30:账号不存在,不能找回密码*/

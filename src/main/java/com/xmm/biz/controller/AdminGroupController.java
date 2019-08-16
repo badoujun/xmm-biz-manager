@@ -5,6 +5,7 @@ import com.xmm.biz.constant.ResultValueEnum;
 import com.xmm.biz.pojo.AdminGroup;
 import com.xmm.biz.service.AdminGroupService;
 import com.xmm.biz.target.UserLoginToken;
+import com.xmm.biz.util.PowerUtil;
 import com.xmm.biz.vo.request.AdminGroupAddRequest;
 import com.xmm.biz.vo.request.AdminGroupUpRequest;
 import com.xmm.biz.vo.request.AdminIdRequest;
@@ -28,6 +29,9 @@ public class AdminGroupController {
     @Autowired
     AdminGroupService adminGroupService;
 
+    @Autowired
+    PowerUtil powerUtil;
+
     @RequestMapping(name = "组织列表", value = "/find")
     @ResponseBody
     @ApiOperation("组织列表")
@@ -45,6 +49,7 @@ public class AdminGroupController {
     @UserLoginToken(powerName = "group_add")
     public BaseResult<GroupResult> addGroup(AdminGroupAddRequest req){
         req.toRequestCheck();
+        powerUtil.checkUserGroupAndUseGroup(req.getUserId(), req.getParentId());
         AdminGroup group = new AdminGroup();
         group.setGroupname(req.getGroupName());
         group.setParentid(req.getParentId());
@@ -66,6 +71,7 @@ public class AdminGroupController {
     @UserLoginToken(powerName = "group_del")
     public BaseResult<String> deleteGroup(AdminIdRequest req){
         req.toRequestCheck();
+        powerUtil.checkUserGroupAndUseGroup(req.getUserId(), req.getId());
         boolean flag = adminGroupService.delete(req.getId());
         if(flag){
             BaseResult<String> result = BaseResult.newInstance();
@@ -81,6 +87,7 @@ public class AdminGroupController {
     @UserLoginToken(powerName = "group_up")
     public BaseResult<String> updateGroup(AdminGroupUpRequest req){
         req.toRequestCheck();
+        powerUtil.checkUserGroupAndUseGroup(req.getUserId(), req.getId());
         AdminGroup group = new AdminGroup();
         group.setId(req.getId());
         group.setGroupname(req.getGroupName());

@@ -275,8 +275,7 @@
                                         "action"			: function (data) {
                                             var inst = $.jstree.reference(data.reference),
                                                 obj = inst.get_node(data.reference);
-                                            obj.a_attr.sort = obj.a_attr.sort - 1;
-                                            vm_main_container.updateTree(obj);
+                                            vm_main_container.moveTree(inst, obj, true);
                                         }
                                     },
                                     "down" : {
@@ -287,8 +286,7 @@
                                         "action"			: function (data) {
                                             var inst = $.jstree.reference(data.reference),
                                                 obj = inst.get_node(data.reference);
-                                            obj.a_attr.sort = obj.a_attr.sort + 1;
-                                            vm_main_container.updateTree(obj);
+                                            vm_main_container.moveTree(inst, obj, false);
                                         }
                                     }
                                 }
@@ -301,6 +299,25 @@
             treeRefresh: function (data_arr){
                 vm_main_container.tableData = data_arr;
                 vm_main_container.initTree();
+            },
+            moveTree: function (inst, obj, isUpward){
+                var sort_arr = [];
+                $.each(inst._model.data,function(key,val){
+                    if(val.parent == obj.parent){
+                        sort_arr.push(val.a_attr.sort);
+                    }
+                });
+                sort_arr.sort(function(a, b){return a - b});
+                var index;
+                if(isUpward){
+                    index = sort_arr.indexOf(obj.a_attr.sort) - 1;
+                }else{
+                    index = sort_arr.indexOf(obj.a_attr.sort) + 1;
+                }
+                if(index > 0 && index < sort_arr.length){
+                    obj.a_attr.sort = sort_arr[index];
+                    vm_main_container.updateTree(obj);
+                }
             },
             findTree: function () {
                 if (this.power_sel == 1) {

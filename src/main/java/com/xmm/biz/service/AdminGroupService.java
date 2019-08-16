@@ -14,4 +14,9 @@ public interface AdminGroupService {
     boolean delete(long id);
 
     boolean update(AdminGroup group);
+
+    /**
+     * 判断操作的指定组织是否属于用户所属组织旗下
+     */
+    boolean isGroupInner(long userId, long groupId);
 }

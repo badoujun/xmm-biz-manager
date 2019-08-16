@@ -14,7 +14,7 @@ public class AdminIdRequest extends BaseRequest implements RequestCheck{
     @Override
     public void toRequestCheck() {
         if(id < 1){
-            throw new BaseException(ResultValueEnum.INPUT_GROUP_PARENTID_ERROR);
+            throw new BaseException(ResultValueEnum.INPUT_ID_ERROR);
         }
     }
 
