@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: @package.environment@ #指定执行环境,打包<mvn clean package -P test>或<mvn clean package -P prod>
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    cache: false

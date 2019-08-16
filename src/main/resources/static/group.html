@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>组织管理</title>
+    <meta name="description" content="404 Error Page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css"/>
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/ace-ie.min.css"/>
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="assets/js/ace-extra.min.js"></script>
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="no-skin">
+<div class="main-container ace-save-state" id="main-container">
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-tachometer"></i>
+                        <a href="home.html">人员管理</a>
+                    </li>
+                    <li class="active">组织管理</li>
+                </ul><!-- /.breadcrumb -->
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <p class="row">
+                            <p>
+                                <button class="btn refresh "><i class="glyphicon glyphicon-refresh"></i></button>
+                            </p>
+                        </p>
+                        <p class="input-group row">
+                            <span class="input-group-addon" id="basic-addon1"><i
+                                    class="glyphicon glyphicon-screenshot"></i></span>
+                            <input type="text" class="form-control" placeholder="快速搜索..." id="search_ay"
+                                   aria-describedby="basic-addon1">
+                        </p>
+                        <!--描述：jstree 树形菜单容器-->
+                        <p id="jstree_demo_p" class="row">
+
+                        </p>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Ace</span>
+							后台管理系统 &copy; 2013-2014
+						</span>
+                &nbsp; &nbsp;
+                <span class="action-buttons"></span>
+            </div>
+        </div>
+    </div>
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+<!-- basic scripts -->
+<!--[if !IE]> -->
+<script src="assets/js/jquery-2.1.4.min.js"></script>
+<!-- <![endif]-->
+<!--[if IE]>
+<script src="assets/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- page specific plugin scripts -->
+<!-- ace scripts -->
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
+<!-- inline scripts related to this page -->
+<script src="vue/vue.js"></script>
+<script src="js/global.js"></script>
+<script src="jsTree/jstree.js"></script>
+<link rel="stylesheet" href="jsTree/themes/default/style.min.css"/>
+<script>
+    var vm_main_container = new Vue({
+        el: '#main-container',
+        data: {
+            token: global.$data.token,
+            tableData: [],
+            power_add: global.$data.power_add,
+            power_del: global.$data.power_del,
+            power_up: global.$data.power_up,
+            power_sel: global.$data.power_sel,
+            treeData: null
+        },
+        created: function () {
+            this.findTree();
+        },
+        methods: {
+            initTree: function () {
+                if(vm_main_container.treeData == null){
+                    vm_main_container.treeData = vm_main_container.jstree_fun();
+                    vm_main_container.treeData.on("open_node.jstree", function (e, data) { //监听打开事件
+                        var currentNode = data.node;
+                        data.instance.set_icon(currentNode, "glyphicon glyphicon-folder-open");
+                    });
+                    vm_main_container.treeData.on("close_node.jstree", function (e, data) { //监听关闭事件
+                        var currentNode = data.node;
+                        data.instance.set_icon(currentNode, "glyphicon glyphicon-folder-close");
+                    });
+                    vm_main_container.treeData.on("activate_node.jstree", function (e, data) {
+                        var currentNode = data.node; //获取当前节点的json .node
+                        //alert(currentNode.a_attr.id)
+                        //alert(currentNode.a_attr.href) //获取超链接的  .a_attr.href "链接"  .a_attr.id ID
+                        //alert(currentNode.li_attr.href) //获取属性的  .li_attr.href "链接"  .li_attr.id ID
+                    });
+                    // 创建
+                    vm_main_container.treeData.on("create_node.jstree", function (e, data) {
+
+                    });
+                    // 修改
+                    vm_main_container.treeData.on("rename_node.jstree", function (e, data) {
+                        if(data.node.original.text == "New node"){//add
+                            vm_main_container.addTree(data.node);
+                        }else{//update
+                            vm_main_container.updateTree(data.node);
+                        }
+                    });
+                    // 删除
+                    vm_main_container.treeData.on("delete_node.jstree", function (e, data) {
+                        vm_main_container.deleteTree(data.node);
+                    });
+                    // 查询节点名称
+                    var to = false;
+                    $("#search_ay").keyup(function () {
+                        if (to) {
+                            clearTimeout(to);
+                        }
+                        to = setTimeout(function () {
+                            vm_main_container.treeData.jstree(true).search($('#search_ay').val()); //开启插件查询后 使用这个方法可模糊查询节点
+                        }, 250);
+                    });
+                    // 刷新事件
+                    $('.refresh').click(function () {
+                        vm_main_container.findTree();
+                    });
+                }else{
+                    vm_main_container.treeData.jstree(true).settings.core.data = vm_main_container.tableData;
+                    vm_main_container.treeData.jstree(true).refresh();
+                }
+            },
+            jstree_fun: function () {
+                var $tree = $("#jstree_demo_p").jstree({
+                    "core": {
+                        //'multiple': false,  // 是否可以选择多个节点
+                        //"check_callback": true, //    允许拖动菜单  唯一 右键菜单
+                        "check_callback": true, //设置为true,当用户修改数时,允许所有的交互和更好的控制(例如增删改)
+                        "themes": {
+                            "stripes": true
+                        }, //主题配置对象,表示树背景是否有条带
+                        "data": vm_main_container.tableData,
+                        "check_callback": function (operation, node, node_parent, node_position, more) {
+                            if (node_parent.id === "#") {
+                                alert("所属组织不可更改");
+                                return false;
+                            } else if ((operation == "create_node" || operation == "copy_node") && vm_main_container.power_add == 0) {
+                                alert("无对应操作权限");
+                                return false;
+                            } else if (operation == "delete_node" && vm_main_container.power_del == 0) {
+                                alert("无对应操作权限");
+                                return false;
+                            } else if ((operation == "edit" || operation == "rename_node" || operation == "move_node") && vm_main_container.power_up == 0) {
+                                alert("无对应操作权限");
+                                return false;
+                            }
+                            return true;
+                        }
+                    },
+                    "plugins": [ //插件
+                        "search", //允许插件搜索
+                        // "sort", //排序插件
+                        "state", //状态插件
+                        "types", //类型插件
+                        "unique", //唯一插件
+                        "wholerow", //整行插件
+                        "contextmenu"
+                    ],
+                    "types": {
+                        "default": { //设置默认的icon 图
+                            "icon": "glyphicon glyphicon-folder-close",
+                        }
+                    },
+                    "contextmenu": {
+                        "items": {
+                            "create" : {
+                                "separator_before"	: false,
+                                "separator_after"	: true,
+                                "_disabled"			: false, //(this.check("create_node", data.reference, {}, "last")),
+                                "label"				: "新增",
+                                "action"			: function (data) {
+                                    var inst = $.jstree.reference(data.reference),
+                                        obj = inst.get_node(data.reference);
+                                    inst.create_node(obj, {}, "last", function (new_node) {
+                                        try {
+                                            inst.edit(new_node);
+                                        } catch (ex) {
+                                            setTimeout(function () { inst.edit(new_node); },0);
+                                        }
+                                    });
+                                }
+                            },
+                            "rename" : {
+                                "separator_before"	: false,
+                                "separator_after"	: false,
+                                "_disabled"			: false, //(this.check("rename_node", data.reference, this.get_parent(data.reference), "")),
+                                "label"				: "重命名",
+                                "action"			: function (data) {
+                                    var inst = $.jstree.reference(data.reference),
+                                        obj = inst.get_node(data.reference);
+                                    inst.edit(obj);
+                                }
+                            },
+                            "remove" : {
+                                "separator_before"	: false,
+                                "icon"				: false,
+                                "separator_after"	: false,
+                                "_disabled"			: false, //(this.check("delete_node", data.reference, this.get_parent(data.reference), "")),
+                                "label"				: "删除",
+                                "action"			: function (data) {
+                                    var inst = $.jstree.reference(data.reference),
+                                        obj = inst.get_node(data.reference);
+                                    if(inst.is_selected(obj)) {
+                                        inst.delete_node(inst.get_selected());
+                                    }
+                                    else {
+                                        inst.delete_node(obj);
+                                    }
+                                }
+                            },
+                            "move" : {
+                                "separator_before"	: true,
+                                "icon"				: false,
+                                "separator_after"	: false,
+                                "label"				: "移动",
+                                "action"			: false,
+                                "submenu" : {
+                                    "upward" : {
+                                        "separator_before"	: false,
+                                        "separator_after"	: false,
+                                        "label"				: "上移",
+                                        "action"			: function (data) {
+                                            var inst = $.jstree.reference(data.reference),
+                                                obj = inst.get_node(data.reference);
+                                            obj.a_attr.sort = obj.a_attr.sort - 1;
+                                            vm_main_container.updateTree(obj);
+                                        }
+                                    },
+                                    "down" : {
+                                        "separator_before"	: false,
+                                        "icon"				: false,
+                                        "separator_after"	: false,
+                                        "label"				: "下移",
+                                        "action"			: function (data) {
+                                            var inst = $.jstree.reference(data.reference),
+                                                obj = inst.get_node(data.reference);
+                                            obj.a_attr.sort = obj.a_attr.sort + 1;
+                                            vm_main_container.updateTree(obj);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                return $tree;
+            },
+            treeRefresh: function (data_arr){
+                vm_main_container.tableData = data_arr;
+                vm_main_container.initTree();
+            },
+            findTree: function () {
+                if (this.power_sel == 1) {
+                    $.ajax({
+                        async: true,
+                        type: "post",
+                        url: "/group/find",
+                        data: {
+                            token: this.token,
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.statusCode == 1) {
+                                var arr_item = [];
+                                var start_index = result.data[0].parentid;
+                                $.each(result.data,function(key,val){
+                                    var item = {
+                                        "id": val.id+"",
+                                        "parent": val.parentid == start_index ? "#" : val.parentid+"",
+                                        "text": val.groupname,
+                                        "a_attr": {
+                                            "sort": val.sort
+                                        }
+                                    };
+                                    arr_item.push(item);
+                                });
+                                vm_main_container.treeRefresh(arr_item);
+                            } else {
+                                alert(result.message);
+                            }
+                        },
+                        error: function (result) {
+                            alert("功能异常，请联系管理员");
+                        }
+                    });
+                } else {
+                    alert("无对应操作权限");
+                }
+            },
+            addTree: function (node) {
+                if (this.power_add == 1) {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/group/add",
+                        data: {
+                            token: this.token,
+                            groupName: node.text,
+                            parentId: node.parent
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.statusCode != 1) {
+                                alert(result.message);
+                            }
+                        },
+                        error: function (result) {
+                            alert("功能异常，请联系管理员");
+                        }
+                    });
+                    vm_main_container.findTree();
+                } else {
+                    alert("无对应操作权限");
+                }
+            },
+            deleteTree: function (node) {
+                if (this.power_del == 1) {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/group/delete",
+                        data: {
+                            token: this.token,
+                            id: node.id
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.statusCode != 1) {
+                                alert(result.message);
+                            }
+                        },
+                        error: function (result) {
+                            alert("功能异常，请联系管理员");
+                        }
+                    });
+                    vm_main_container.findTree();
+                } else {
+                    alert("无对应操作权限");
+                }
+            },
+            updateTree: function (node) {
+                if (this.power_up == 1) {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/group/update",
+                        data: {
+                            token: this.token,
+                            id: node.id,
+                            groupName: node.text,
+                            parentId: node.parent,
+                            sort: node.a_attr.sort
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.statusCode != 1) {
+                                alert(result.message);
+                            }
+                        },
+                        error: function (result) {
+                            alert("功能异常，请联系管理员");
+                        }
+                    });
+                    vm_main_container.findTree();
+                } else {
+                    alert("无对应操作权限");
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/xmmdb?characterEncoding=utf8
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 192.168.3.153
+    port: 6379
+    password:
+    timeout: 1000
+    database: 2
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 8
+        min-idle: 2
+        max-wait: 100
+#自定义参数
+swagger:
+  show: true #自定义,是否开启API文档显示
+  testApi: true #自定义,是否开启包含@TestApi注解的接口
+jwttoken:
+  key: xmm_api_key #自定义,token密钥
