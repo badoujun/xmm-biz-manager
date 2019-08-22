@@ -16,11 +16,11 @@ public class AdminLoginRequest implements RequestCheck{
 
     @Override
     public void toRequestCheck() {
-        if(pwd == null || pwd.length() < 6 || pwd.length() > 15){
-            throw new BaseException(ResultValueEnum.INPUT_PASSWORD_ERROR);
-        }
         if(username == null || username.length() < 4 || username.length() > 15){
             throw new BaseException(ResultValueEnum.INPUT_USERNAME_ERROR);
+        }
+        if(pwd == null || pwd.length() < 6 || pwd.length() > 15){
+            throw new BaseException(ResultValueEnum.INPUT_PASSWORD_ERROR);
         }
     }
 
