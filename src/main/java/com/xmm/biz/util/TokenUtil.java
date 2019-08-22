@@ -29,12 +29,12 @@ public class TokenUtil {
     /**
      * 根据userId生成token,用以判断user是否登录
      */
-    public String createTokenByLogin(long userId){
+    public String createTokenByLogin(long userId, String username){
         String token = "";
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         token = JWT.create()
-                .withAudience(String.valueOf(userId))
+                .withAudience(String.valueOf(userId), username)
                 .withIssuedAt(now)
                 .withClaim(SystemConstant.TOKEN_PURPOSE, SystemConstant.IS_LOGIN)
                 .sign(Algorithm.HMAC256(JWTTokenKey));
@@ -51,12 +51,12 @@ public class TokenUtil {
     /**
      * 根据userId生成token,用以判断user是否通过忘记密码验证
      */
-    public String createTokenByChangePassword(long userId){
+    public String createTokenByChangePassword(long userId, String username){
         String token = "";
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         token = JWT.create()
-                .withAudience(String.valueOf(userId))
+                .withAudience(String.valueOf(userId), username)
                 .withIssuedAt(now)
                 .withClaim(SystemConstant.TOKEN_PURPOSE, SystemConstant.CHANGE_PASSWORD)
                 .sign(Algorithm.HMAC256(JWTTokenKey));
@@ -90,6 +90,7 @@ public class TokenUtil {
             }
             // 获取 token 中的 userId
             String userId = jwt.getAudience().get(0);
+            String username = jwt.getAudience().get(1);
             // 查询用户是否存在,以及验证用户状态
             AdminUser user = adminUserService.findById(Long.valueOf(userId));
             if (user == null || user.getState() != 1) {

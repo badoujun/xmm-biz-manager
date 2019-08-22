@@ -16,6 +16,9 @@ public class BaseRequest implements Serializable
     @ApiModelProperty(hidden = true)
     private long userId;
 
+    @ApiModelProperty(hidden = true)
+    private String username;
+
     public String getToken() {
         return token;
     }
@@ -30,5 +33,13 @@ public class BaseRequest implements Serializable
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

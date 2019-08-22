@@ -51,14 +51,14 @@ public class AdminServiceImpl implements AdminService {
             if(adminUser.getState() == 1){
                 AdminDataResult dataResult = new AdminDataResult();
                 dataResult.setUsername(adminUser.getUsername());
-                dataResult.setToken(tokenUtil.createTokenByLogin(adminUser.getId()));
+                dataResult.setToken(tokenUtil.createTokenByLogin(adminUser.getId(), adminUser.getUsername()));
                 dataResult.setCatalogList(getCatalogsByUser(adminUser.getId()));
                 return dataResult;
             }else{
                 throw new BaseException(ResultValueEnum.OTHER_USER_LOCK);
             }
         }else {
-            throw new BaseException(ResultValueEnum.OTHER_USER_NOT_EXIST);
+            throw new BaseException(ResultValueEnum.OTHER_LOGIN_VALIDATE_FAIL);
         }
     }
 

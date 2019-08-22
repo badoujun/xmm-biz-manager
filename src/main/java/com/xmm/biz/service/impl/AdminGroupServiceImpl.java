@@ -111,24 +111,26 @@ public class AdminGroupServiceImpl implements AdminGroupService {
         AdminGroup oldGroup = adminGroupDao.selectByPrimaryKey(group.getId());
         int offset = group.getSort() - oldGroup.getSort();
         if(offset != 0){
-            flag = displaceGroupSort(oldGroup, group.getSort());
+            flag = displaceGroupSort(oldGroup, group.getSort(), group.getUpdator());
         }else{
             flag = adminGroupDao.updateByPrimaryKeySelective(group) == 1;
         }
         return flag;
     }
 
-    private boolean displaceGroupSort(AdminGroup group, Byte sort){
+    private boolean displaceGroupSort(AdminGroup group, Byte sort, String updator){
         AdminGroupExample example = new AdminGroupExample();
         AdminGroupExample.Criteria criteria = example.createCriteria();
         criteria.andParentidEqualTo(group.getParentid());
         criteria.andSortEqualTo(sort);
         AdminGroup record1 = new AdminGroup();
         record1.setSort(group.getSort());
+        record1.setUpdator(updator);
         int row1 = adminGroupDao.updateByExampleSelective(record1, example);
         AdminGroup record2 = new AdminGroup();
         record2.setId(group.getId());
         record2.setSort(sort);
+        record2.setUpdator(updator);
         int row2 = adminGroupDao.updateByPrimaryKeySelective(record2);
         return row1 == row2 && row1 > 0;
     }

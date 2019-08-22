@@ -53,6 +53,7 @@ public class AdminGroupController {
         AdminGroup group = new AdminGroup();
         group.setGroupname(req.getGroupName());
         group.setParentid(req.getParentId());
+        group.setUpdator(req.getUsername());
         int row = adminGroupService.add(group);
         if(row == 1){
             GroupResult groupResult = new GroupResult();
@@ -94,6 +95,7 @@ public class AdminGroupController {
         group.setParentid(req.getParentId());
         group.setSort(Integer.valueOf(req.getSort()).byteValue());
         group.setState(Integer.valueOf(req.getState()).byteValue());
+        group.setUpdator(req.getUsername());
         boolean flag = adminGroupService.update(group);
         if(flag){
             BaseResult<String> result = BaseResult.newInstance();

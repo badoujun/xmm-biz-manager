@@ -28,6 +28,8 @@ public class RequestFilter implements Filter {
             if(token != null && token != "") {//入参存在token,则将token中包含的userId加入入参,过滤器不做token判断和user是否存在判断,交由拦截器进行判断
                 String userId = JWT.decode(token).getAudience().get(0);
                 requestParameterWrapper.addParameter("userId",userId);
+                String username = JWT.decode(token).getAudience().get(1);
+                requestParameterWrapper.addParameter("username",username);
             }
         }catch (Exception e){
 
