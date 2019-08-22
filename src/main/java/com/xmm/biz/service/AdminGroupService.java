@@ -9,6 +9,8 @@ public interface AdminGroupService {
 
     List<GroupResult> findByUser(long userId);
 
+    List<AdminGroup> getGroupDown(AdminGroup adminGroup);
+
     int add(AdminGroup group);
 
     boolean delete(long id);

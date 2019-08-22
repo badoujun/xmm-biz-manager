@@ -48,11 +48,15 @@ public class AdminServiceImpl implements AdminService {
         List<AdminUser> list = adminUserDao.selectByExample(example);
         if(list.size() > 0){
             AdminUser adminUser = list.get(0);
-            AdminDataResult dataResult = new AdminDataResult();
-            dataResult.setUsername(adminUser.getUsername());
-            dataResult.setToken(tokenUtil.createTokenByLogin(adminUser.getId()));
-            dataResult.setCatalogList(getCatalogsByUser(adminUser.getId()));
-            return dataResult;
+            if(adminUser.getState() == 1){
+                AdminDataResult dataResult = new AdminDataResult();
+                dataResult.setUsername(adminUser.getUsername());
+                dataResult.setToken(tokenUtil.createTokenByLogin(adminUser.getId()));
+                dataResult.setCatalogList(getCatalogsByUser(adminUser.getId()));
+                return dataResult;
+            }else{
+                throw new BaseException(ResultValueEnum.OTHER_USER_LOCK);
+            }
         }else {
             throw new BaseException(ResultValueEnum.OTHER_USER_NOT_EXIST);
         }

@@ -1,5 +1,9 @@
 package com.xmm.biz.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,47 +11,59 @@ import java.util.Date;
  * admin_user
  * @author 
  */
+@ApiModel(description = "用户信息返回")
 public class AdminUser implements Serializable {
+    @ApiModelProperty(value="ID",position=1)
     private Long id;
 
     /**
      * 组织ID
      */
+    @ApiModelProperty(value="组织ID",position=2)
     private Long groupid;
 
     /**
      * 用户名
      */
+    @ApiModelProperty(value="用户名",position=3)
     private String username;
 
     /**
      * 密码
      */
+    @ApiModelProperty(value="密码",position=4)
     private String pwd;
 
     /**
      * 真实姓名
      */
+    @ApiModelProperty(value="真实姓名",position=5)
     private String realname;
 
     /**
      * 状态,1-正常,2-禁用
      */
+    @ApiModelProperty(value="状态,1-正常,2-禁用",position=6)
     private Byte state;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(value="创建时间",position=7)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createtime;
 
     /**
      * 更新时间
      */
+    @ApiModelProperty(value="更新时间",position=8)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updatetime;
 
     /**
      * 更新人
      */
+    @ApiModelProperty(value="更新人",position=9)
     private String updator;
 
     private static final long serialVersionUID = 1L;

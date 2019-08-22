@@ -127,6 +127,7 @@
                     vm_main_container.treeData.on("open_node.jstree", function (e, data) { //监听打开事件
                         var currentNode = data.node;
                         data.instance.set_icon(currentNode, "glyphicon glyphicon-folder-open");
+                        vm_main_container.changeColor();
                     });
                     vm_main_container.treeData.on("close_node.jstree", function (e, data) { //监听关闭事件
                         var currentNode = data.node;
@@ -168,6 +169,9 @@
                     $('.refresh').click(function () {
                         vm_main_container.findTree();
                     });
+                    vm_main_container.treeData.on("changed.jstree", function (e, data) {
+                        vm_main_container.changeColor();
+                    });
                 }else{
                     vm_main_container.treeData.jstree(true).settings.core.data = vm_main_container.tableData;
                     vm_main_container.treeData.jstree(true).refresh();
@@ -176,8 +180,7 @@
             jstree_fun: function () {
                 var $tree = $("#jstree_demo_p").jstree({
                     "core": {
-                        //'multiple': false,  // 是否可以选择多个节点
-                        //"check_callback": true, //    允许拖动菜单  唯一 右键菜单
+                        'multiple': false,  // 是否可以选择多个节点
                         "check_callback": true, //设置为true,当用户修改数时,允许所有的交互和更好的控制(例如增删改)
                         "themes": {
                             "stripes": true
@@ -290,6 +293,40 @@
                                         }
                                     }
                                 }
+                            },
+                            "state" : {
+                                "separator_before"	: true,
+                                "icon"				: false,
+                                "separator_after"	: false,
+                                "label"				: "状态",
+                                "action"			: false,
+                                "submenu" : {
+                                    "open" : {
+                                        "separator_before"	: false,
+                                        "separator_after"	: false,
+                                        "label"				: "启用",
+                                        "action"			: function (data) {
+                                            var inst = $.jstree.reference(data.reference),
+                                                obj = inst.get_node(data.reference);
+                                            if(obj.a_attr.state == 2){
+                                                vm_main_container.stateTree(obj);
+                                            }
+                                        }
+                                    },
+                                    "close" : {
+                                        "separator_before"	: false,
+                                        "icon"				: false,
+                                        "separator_after"	: false,
+                                        "label"				: "禁用",
+                                        "action"			: function (data) {
+                                            var inst = $.jstree.reference(data.reference),
+                                                obj = inst.get_node(data.reference);
+                                            if(obj.a_attr.state == 1){
+                                                vm_main_container.stateTree(obj);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -299,6 +336,16 @@
             treeRefresh: function (data_arr){
                 vm_main_container.tableData = data_arr;
                 vm_main_container.initTree();
+            },
+            changeColor: function (){
+                $.each($('.jstree-anchor'), function(i, item){
+                    var el = jQuery(item);
+                    el.css("color", el.attr("state") == 1 ? "#2B7DBC" : "red");
+                });
+            },
+            stateTree: function (obj){
+                obj.a_attr.state = obj.a_attr.state == 1 ? 2 : 1;
+                vm_main_container.updateTree(obj);
             },
             moveTree: function (inst, obj, isUpward){
                 var sort_arr = [];
@@ -339,7 +386,8 @@
                                         "parent": val.parentid == start_index ? "#" : val.parentid+"",
                                         "text": val.groupname,
                                         "a_attr": {
-                                            "sort": val.sort
+                                            "sort": val.sort,
+                                            "state": val.state
                                         }
                                     };
                                     arr_item.push(item);
@@ -419,7 +467,8 @@
                             id: node.id,
                             groupName: node.text,
                             parentId: node.parent,
-                            sort: node.a_attr.sort
+                            sort: node.a_attr.sort,
+                            state: node.a_attr.state
                         },
                         dataType: "json",
                         success: function (result) {

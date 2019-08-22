@@ -46,7 +46,8 @@ public class AdminGroupServiceImpl implements AdminGroupService {
         return list;
     }
 
-    private List<AdminGroup> getGroupDown(AdminGroup adminGroup){
+    @Override
+    public List<AdminGroup> getGroupDown(AdminGroup adminGroup){
         List<AdminGroup> list = new ArrayList<>();
         list.add(adminGroup);
         List<Long> parentIds = new ArrayList<>();

@@ -17,6 +17,9 @@ public class AdminGroupUpRequest extends AdminIdRequest implements RequestCheck{
     @ApiModelProperty(value = "排序", required = true)
     private int sort;
 
+    @ApiModelProperty(value = "状态,1-正常,2-禁用", required = true)
+    private int state;
+
     @Override
     public void toRequestCheck() {
         if(groupName == null){
@@ -27,6 +30,9 @@ public class AdminGroupUpRequest extends AdminIdRequest implements RequestCheck{
         }
         if(sort < 1){
             throw new BaseException(ResultValueEnum.INPUT_SORT_ERROR);
+        }
+        if(state != 1 && state != 2){
+            throw new BaseException(ResultValueEnum.INPUT_STATE_ERROR);
         }
     }
 
@@ -52,5 +58,13 @@ public class AdminGroupUpRequest extends AdminIdRequest implements RequestCheck{
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

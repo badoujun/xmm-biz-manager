@@ -290,4 +290,23 @@
     AND gp.state = 1
     AND ur.userId = #{userId} AND po.powerEnum = #{powerEnum};
   </select>
+
+  <select id="findUserDataByExample" parameterType="com.xmm.biz.pojo.AdminUserExample" resultType="com.xmm.biz.vo.result.AdminUserResult">
+    SELECT us.*,ur.roleId FROM admin_user us
+    LEFT JOIN admin_user_role ur ON ur.userId = us.id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
 </mapper>

@@ -175,7 +175,8 @@ public enum ResultValueEnum implements BaseEnum<Integer>{
 	INPUT_GROUP_NAME_ERROR(720,"组织名不能为空"),
 	INPUT_GROUP_PARENTID_ERROR(721,"上级组织不能为空"),
 	INPUT_ID_ERROR(722,"ID不能为空"),
-	INPUT_SORT_ERROR(723,"序号不能为空");
+	INPUT_SORT_ERROR(723,"序号不能为空"),
+	INPUT_STATE_ERROR(724,"状态设置错误");
 
 	private int key;
 

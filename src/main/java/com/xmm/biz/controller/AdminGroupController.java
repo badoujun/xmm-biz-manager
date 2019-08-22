@@ -93,6 +93,7 @@ public class AdminGroupController {
         group.setGroupname(req.getGroupName());
         group.setParentid(req.getParentId());
         group.setSort(Integer.valueOf(req.getSort()).byteValue());
+        group.setState(Integer.valueOf(req.getState()).byteValue());
         boolean flag = adminGroupService.update(group);
         if(flag){
             BaseResult<String> result = BaseResult.newInstance();
